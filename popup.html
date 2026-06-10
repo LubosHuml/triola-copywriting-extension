@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triola Copywriting AI</title>
+  <style>
+    :root {
+      --color-primary: #8C1D31;
+      --color-primary-dark: #6B1524;
+      --color-primary-light: #A82540;
+      --color-accent: #C9A96E;
+      --color-bg: #f5f4f0;
+      --color-bg-card: #ffffff;
+      --color-text: #2d2d2d;
+      --color-text-muted: #777;
+      --color-border: #e8e3de;
+      --color-success: #2d7a3e;
+      --color-error: #c0392b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 400px;
+      min-height: 500px;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-size: 13px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: white;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--color-accent);
+      letter-spacing: -1px;
+    }
+
+    .header-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      opacity: 0.75;
+    }
+
+    .header-settings {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .header-settings:hover {
+      color: white;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .content {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ===== FORM ELEMENTS ===== */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 7px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--color-text);
+      background: white;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(140, 29, 49, 0.1);
+    }
+
+    input[type="text"]::placeholder {
+      color: #bbb;
+    }
+
+    /* ===== PRODUCT CODE FIELD ===== */
+    .product-code-wrapper {
+      position: relative;
+    }
+
+    .product-code-wrapper input {
+      padding-right: 80px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .detect-btn {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 4px 8px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .detect-btn:hover {
+      background: var(--color-primary-dark);
+    }
+
+    /* ===== FORMAT SELECT ===== */
+    .format-select select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238C1D31' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 30px;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    /* ===== GENERATE BUTTON ===== */
+    .generate-btn {
+      width: 100%;
+      padding: 11px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      letter-spacing: 0.3px;
+    }
+
+    .generate-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(140, 29, 49, 0.3);
+    }
+
+    .generate-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .generate-btn .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .generate-btn.loading .spinner { display: block; }
+    .generate-btn.loading .btn-text { opacity: 0.7; }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== STATUS MESSAGE ===== */
+    .status-msg {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      display: none;
+    }
+
+    .status-msg.error {
+      background: rgba(192, 57, 43, 0.1);
+      color: var(--color-error);
+      border: 1px solid rgba(192, 57, 43, 0.25);
+      display: block;
+    }
+
+    .status-msg.success {
+      background: rgba(45, 122, 62, 0.1);
+      color: var(--color-success);
+      border: 1px solid rgba(45, 122, 62, 0.25);
+      display: block;
+    }
+
+    .status-msg.info {
+      background: rgba(201, 169, 110, 0.1);
+      color: #7a6030;
+      border: 1px solid rgba(201, 169, 110, 0.3);
+      display: block;
+    }
+
+    /* ===== OUTPUT SECTION ===== */
+    .output-section {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .output-section.visible {
+      display: flex;
+    }
+
+    .output-tabs {
+      display: flex;
+      gap: 6px;
+      border-bottom: 2px solid var(--color-border);
+      padding-bottom: -2px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* HTML Code output */
+    .html-output {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 7px;
+      padding: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      max-height: 180px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* Preview output */
+    .preview-output {
+      background: white;
+      border: 1.5px solid var(--color-border);
+      border-radius: 7px;
+      padding: 12px;
+      max-height: 180px;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .preview-output h1, .preview-output h2 { color: var(--color-primary); margin-bottom: 6px; }
+    .preview-output p { margin-bottom: 8px; }
+    .preview-output ul { padding-left: 20px; margin-bottom: 8px; }
+    .preview-output li { margin-bottom: 4px; }
+    .preview-output strong { color: var(--color-primary); }
+
+    /* ===== ACTION BUTTONS ===== */
+    .action-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 8px 12px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      background: white;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(140, 29, 49, 0.04);
+    }
+
+    .action-btn.copy-btn:active, .action-btn.copy-btn.copied {
+      background: rgba(45, 122, 62, 0.1);
+      color: var(--color-success);
+      border-color: var(--color-success);
+    }
+
+    .action-btn.insert-btn {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(140, 29, 49, 0.04);
+    }
+
+    .action-btn.insert-btn:hover {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: var(--color-border);
+      margin: 2px 0;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(140, 29, 49, 0.25); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(140, 29, 49, 0.5); }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <div class="header-logo">T</div>
+    <div>
+      <div class="header-title">Triola Copywriting AI</div>
+      <div class="header-subtitle">Generator HTML popisku</div>
+    </div>
+  </div>
+  <button class="header-settings" id="openSettings" title="Otevreni nastaveni">&#9881;</button>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+
+  <!-- Product Code -->
+  <div class="field-group">
+    <label>Kod produktu (fazony)</label>
+    <div class="product-code-wrapper">
+      <input
+        type="text"
+        id="productCode"
+        placeholder="napr. 22859/88"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="detect-btn" id="detectCode" title="Automaticky detekovat kod na strance">
+        Detekovat
+      </button>
+    </div>
+  </div>
+
+  <!-- Format & Options Row -->
+  <div class="field-row">
+    <div class="field-group format-select">
+      <label>Format popisku</label>
+      <select id="formatType">
+        <option value="kratky_popis_html">Kratky popis (HTML)</option>
+        <option value="dlouhy_popis_html">Dlouhy popis (HTML)</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label>Ton textu</label>
+      <select id="toneKey">
+        <option value="empaticky">Empaticky</option>
+        <option value="elegantni">Elegantni</option>
+        <option value="informativni">Informativni</option>
+        <option value="hravy">Hravy</option>
+        <option value="luxusni">Luxusni</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Keywords -->
+  <div class="field-group">
+    <label>Klicova slova <span style="font-weight:400; text-transform:none;">(nepovinne)</span></label>
+    <input
+      type="text"
+      id="keywords"
+      placeholder="napr. krajka, elasticky obvod, pohodlne striceni"
+    />
+  </div>
+
+  <!-- Generate Button -->
+  <button class="generate-btn" id="generateBtn">
+    <div class="spinner"></div>
+    <span class="btn-text">&#10024; Generovat popis</span>
+  </button>
+
+  <!-- Status Message -->
+  <div class="status-msg" id="statusMsg"></div>
+
+  <!-- Output Section -->
+  <div class="output-section" id="outputSection">
+    <div class="divider"></div>
+
+    <div class="output-tabs">
+      <button class="tab-btn active" data-tab="html">&#128196; HTML kod</button>
+      <button class="tab-btn" data-tab="preview">&#128065; Nahled</button>
+    </div>
+
+    <div class="tab-content active" id="tab-html">
+      <div class="html-output" id="htmlOutput"></div>
+    </div>
+
+    <div class="tab-content" id="tab-preview">
+      <div class="preview-output" id="previewOutput"></div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="action-btn copy-btn" id="copyBtn">
+        &#128203; Kopirovat HTML
+      </button>
+      <button class="action-btn insert-btn" id="insertBtn">
+        &#128203; Vlozit do adminu
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
