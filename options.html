@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triola Copywriting AI - Nastaveni</title>
+  <style>
+    :root {
+      --color-primary: #8C1D31;
+      --color-primary-dark: #6B1524;
+      --color-primary-light: #A82540;
+      --color-accent: #C9A96E;
+      --color-bg: #f5f5f0;
+      --color-bg-card: #ffffff;
+      --color-text: #2d2d2d;
+      --color-text-muted: #666666;
+      --color-border: #e0dbd5;
+      --color-success: #2d7a3e;
+      --color-error: #c0392b;
+      --shadow: 0 2px 8px rgba(140, 29, 49, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: white;
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 12px rgba(140, 29, 49, 0.3);
+    }
+
+    header .logo {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--color-accent);
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    header p {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: var(--color-bg-card);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--color-border);
+    }
+
+    .card h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 6px;
+    }
+
+    label .hint {
+      font-weight: 400;
+      color: var(--color-text-muted);
+      font-size: 12px;
+      display: block;
+      margin-top: 2px;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--color-text);
+      background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="url"]:focus,
+    select:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(140, 29, 49, 0.1);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(140, 29, 49, 0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-primary);
+      border: 1.5px solid var(--color-primary);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(140, 29, 49, 0.05);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 28px;
+    }
+
+    .status-message {
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      display: none;
+    }
+
+    .status-message.success {
+      background: rgba(45, 122, 62, 0.1);
+      color: var(--color-success);
+      border: 1px solid rgba(45, 122, 62, 0.3);
+      display: block;
+    }
+
+    .status-message.error {
+      background: rgba(192, 57, 43, 0.1);
+      color: var(--color-error);
+      border: 1px solid rgba(192, 57, 43, 0.3);
+      display: block;
+    }
+
+    .info-box {
+      background: rgba(201, 169, 110, 0.1);
+      border: 1px solid rgba(201, 169, 110, 0.4);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #7a6030;
+      margin-top: 8px;
+    }
+
+    .api-test {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .connection-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+      transition: background 0.3s;
+    }
+
+    .connection-indicator.connected { background: #2d7a3e; }
+    .connection-indicator.error { background: #c0392b; }
+    .connection-indicator.testing {
+      background: var(--color-accent);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    #connection-status-text {
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">T</div>
+  <div>
+    <h1>Triola Copywriting AI</h1>
+    <p>Nastaveni rozsireni pro generovani HTML popisku</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- API Connection Settings -->
+  <div class="card">
+    <h2>&#127760; Pripojeni k API</h2>
+
+    <div class="form-group">
+      <label>
+        URL adresa API serveru
+        <span class="hint">Adresa Vaseho nasazeneho Triola Copywriting AI backendu na Render.com</span>
+      </label>
+      <input
+        type="url"
+        id="apiUrl"
+        placeholder="https://triola-copywriter.onrender.com"
+        value="https://triola-copywriter.onrender.com"
+      />
+      <div class="api-test">
+        <div class="connection-indicator" id="connection-indicator"></div>
+        <span id="connection-status-text">Pripojeni neovereno</span>
+        <button class="btn btn-secondary" id="testConnection" style="padding: 6px 14px; font-size: 12px;">
+          &#128268; Testovat
+        </button>
+      </div>
+    </div>
+
+    <div class="info-box">
+      API klic se nenastavuje v rozsireni - backend na Renderu jej ma ulozeny v environment variables.
+      Rozsireni pouze vola API endpointy.
+    </div>
+  </div>
+
+  <!-- Default Generation Parameters -->
+  <div class="card">
+    <h2>&#9881;&#65039; Vychozi parametry generovani</h2>
+
+    <div class="form-group">
+      <label>
+        Vychozi AI model
+        <span class="hint">Ktery model pouzit pro generovani textu</span>
+      </label>
+      <select id="modelKey">
+        <option value="claude-sonnet-4-6">Claude Sonnet 4.6 (doporuceno)</option>
+        <option value="claude-opus-4-5">Claude Opus 4.5 (nejvyssi kvalita)</option>
+        <option value="claude-haiku-3-5">Claude Haiku 3.5 (rychly)</option>
+        <option value="gpt-4o">GPT-4o (OpenAI)</option>
+        <option value="gpt-4o-mini">GPT-4o Mini (OpenAI, rychly)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>
+        Vychozi ton textu
+        <span class="hint">Jak ma byt text napsany</span>
+      </label>
+      <select id="toneKey">
+        <option value="empaticky">Empaticky (Triola standard)</option>
+        <option value="elegantni">Elegantni a sophistikovanY</option>
+        <option value="informativni">Informativni a vecny</option>
+        <option value="hravy">Hravy a odlehceny</option>
+        <option value="luxusni">Luxusni a exkluzivni</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>
+        Vychozi delka textu
+        <span class="hint">Preferovana delka vygenerovaneho popisku</span>
+      </label>
+      <select id="lengthKey">
+        <option value="kratka">Kratka (1-2 vety)</option>
+        <option value="stredni" selected>Stredni (3-5 vet)</option>
+        <option value="dlouha">Dlouha (6+ vet)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Default format -->
+  <div class="card">
+    <h2>&#128196; Vychozi format popisku</h2>
+
+    <div class="form-group">
+      <label>
+        Vychozi format
+        <span class="hint">Ktery format popisku se predvyplni pri otevreni popupu</span>
+      </label>
+      <select id="defaultFormat">
+        <option value="kratky_popis_html">Kratky popis (HTML)</option>
+        <option value="dlouhy_popis_html">Dlouhy popis (HTML)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>
+        Vychozi klicova slova
+        <span class="hint">Klicova slova, ktera se automaticky vlozi (nepovinne)</span>
+      </label>
+      <input
+        type="text"
+        id="defaultKeywords"
+        placeholder="napr. krajka, elasticky obvod, pohodlne striceni"
+      />
+    </div>
+  </div>
+
+  <div id="status-message" class="status-message"></div>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="saveSettings">
+      &#128190; Ulozit nastaveni
+    </button>
+    <button class="btn btn-secondary" id="resetSettings">
+      &#8635; Obnovit vychozi
+    </button>
+  </div>
+</div>
+
+<footer>
+  Triola Copywriting AI Chrome Extension v1.0.0 | Triola s.r.o.
+</footer>
+
+<script src="options.js"></script>
+</body>
+</html>
